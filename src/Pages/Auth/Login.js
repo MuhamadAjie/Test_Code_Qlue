@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "antd/dist/antd.css";
 import styles from "../../Css/Login.module.css";
 import { Card, Form, Input, Button, Checkbox, Row, Col } from "antd";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };
@@ -12,12 +18,32 @@ const Login = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const handleSubmit = async (e) => {
+    await axios
+      .post("https://ayodhya-dev.qlue.id/api/auths/login", { email, password })
+      .then((res) => {
+        const result = res.data;
+        console.log(result);
+        if (res.status === 200) {
+          localStorage.setItem("userData", JSON.stringify(result.data));
+          navigate("/dashboard");
+          e.preventDefault();
+        } else {
+          alert(result.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className={`${styles.backgroundThem}`}>
       <Row>
         <Col span={12} offset={6} style={{ marginTop: 150 }}>
           <Card bordered={false} style={{ padding: 30 }}>
             <Form
+              onSubmit={handleSubmit()}
               name="basic"
               labelCol={{
                 span: 6,
@@ -33,6 +59,7 @@ const Login = () => {
               autoComplete="off"
             >
               <Form.Item
+                onChange={(e) => setEmail(e.target.value)}
                 label="Email"
                 name="email"
                 rules={[
@@ -46,6 +73,7 @@ const Login = () => {
               </Form.Item>
 
               <Form.Item
+                onChange={(e) => setPassword(e.target.value)}
                 label="Password"
                 name="password"
                 rules={[
@@ -75,7 +103,11 @@ const Login = () => {
                   span: 16,
                 }}
               >
-                <Button type="primary" htmlType="submit">
+                <Button
+                  onClick={() => handleSubmit()}
+                  type="primary"
+                  htmlType="submit"
+                >
                   Submit
                 </Button>
               </Form.Item>

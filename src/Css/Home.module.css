@@ -1,0 +1,36 @@
+.warnaHero {
+  width: auto;
+  height: 570px;
+  background-color: #34BE82;
+}
+
+:global(#basic-navbar-nav),
+:global(p),
+:global(Button) {
+  font-family: 'Montserrat',
+  sans-serif;
+}
+
+.textHero {
+  font-size: 60px;
+  font-weight: 700;
+  color: white;
+}
+
+.textSlogan {
+  font-size: 20px;
+  color: white;
+}
+
+.imgHero {
+  width: 80%;
+}
+
+.imgFeature {
+  width: 110px;
+  height: 110px;
+}
+
+.borderNone {
+  border: none;
+}
