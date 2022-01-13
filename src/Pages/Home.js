@@ -1,15 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Header from "../Components/Header";
-import {
-  Container,
-  Row,
-  Col,
-  Image,
-  Button,
-  Card,
-  CardGroup,
-} from "react-bootstrap";
+import { Container, Row, Col, Image, Card, CardGroup } from "react-bootstrap";
 import styles from "../Css/Home.module.css";
 
 function Home() {

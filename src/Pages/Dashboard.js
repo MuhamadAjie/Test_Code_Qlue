@@ -1,17 +1,21 @@
 import { Layout, Menu } from "antd";
+import Icon from "@ant-design/icons";
+import { useNavigate, Link } from "react-router-dom";
 import { Image, NavDropdown, Navbar } from "react-bootstrap";
+import pageRoutes from "../Components/index.";
 import "antd/dist/antd.css";
 import TableTodos from "../Components/TableTodos";
 import styles from "../Css/Dashboard.module.css";
-import {
-  TableOutlined,
-  PieChartOutlined,
-  AreaChartOutlined,
-} from "@ant-design/icons";
 
 const { Content, Footer, Sider } = Layout;
 
 function Dashboard() {
+  const navigate = useNavigate();
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div>
       <Layout>
@@ -26,16 +30,17 @@ function Dashboard() {
           }}
         >
           <div className={`${styles.logo}`} />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={["4"]}>
-            <Menu.Item key="1" icon={<TableOutlined />}>
-              Table
-            </Menu.Item>
-            <Menu.Item key="2" icon={<PieChartOutlined />}>
-              Graph
-            </Menu.Item>
-            <Menu.Item key="3" icon={<AreaChartOutlined />}>
-              Map
-            </Menu.Item>
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
+            {pageRoutes.map((data, i) => {
+              return (
+                <Menu.Item key={i}>
+                  <Link to={data.link}>
+                    <Icon type={data.icon} />
+                    <span className="nav-text">{data.name}</span>
+                  </Link>
+                </Menu.Item>
+              );
+            })}
           </Menu>
         </Sider>
         <Layout>
@@ -62,7 +67,7 @@ function Dashboard() {
                 }
                 className="me-4"
               >
-                <NavDropdown.Item>
+                <NavDropdown.Item onClick={logOut}>
                   <Image
                     className="me-3"
                     width={20}
